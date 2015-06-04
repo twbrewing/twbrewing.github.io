@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Third Window Brewing | Coming Soon!</title>
+    <meta name='viewport' content='width=device-width, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="vendor/ajaxchimp/jquery.ajaxchimp.min.js"></script>
+  </head>
+  <body class="index">
+    <div id="outer">
+      <div id="table-container">
+        <div id="table-cell">
+          <div id="content">
+            <div id="logo">
+              <img alt="Third Window Brewing" src="img/3w_logo.svg" />
+            </div>
+            <div id="coming_soon">
+              <img alt="Coming Soon" src="img/coming_soon.svg" />
+            </div>
+            <div id="signup">
+              <form id="mc-form">
+                <input id="mc-email" placeholder="Keep In Touch!" type="email" /><button type="submit">Register</button>
+              </form>
+              <div class="modal">
+                <input class="modal-state" id="modal-1" type="checkbox" />
+                <div class="modal-fade-screen">
+                  <div class="modal-inner">
+                    <div class="modal-close" for="modal-1"></div>
+                    <h1>
+                      Thank you for signing up. We'll be in touch!
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ul id="social">
+              <li class="twitter">
+                <a href="https://twitter.com/thirdwindowbrew" target="_blank" title="Follow Third Window Brewing on Twitter"><img src="img/social_twitter.svg" /></a>
+              </li>
+              <li class="facebook">
+                <a href="https://www.facebook.com/ThirdWindowBrewing" target="_blank" title="Like Third Window Brewing on Facebook"><img src="img/social_fb.svg" /></a>
+              </li>
+              <li class="instagram">
+                <a href="https://instagram.com/thirdwindowbrewing" target="_blank" title="Follow Third Window Brewing on Instagram"><img src="img/social_ig.svg" /></a>
+              </li>
+            </ul>
+            <div id="pcp">
+              <img src="img/pcp.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(function() {
+        console.log("init");
+        function callbackFunction (resp) {
+          console.log("init callback");
+          if (resp.result === 'success') {
+            console.log("success!");
+            $(".modal-state").prop("checked", true).change();
+          } else {
+            console.log("something wrong");
+            $(".modal-state:checked").prop("checked", false).change();
+          }
+        };
+        $('#mc-form').ajaxChimp({
+          url: '//thirdwindowbrewing.us11.list-manage.com/subscribe/post?u=93108cab36fa5a5d163cf2cba&amp;id=1ea21be5a3',
+          callback: callbackFunction
+        });
+        $("#modal-1").on("change", function() {
+          if ($(this).is(":checked")) {
+            $("body").addClass("modal-open");
+          } else {
+            $("body").removeClass("modal-open");
+          }
+        });
+        $(".modal-fade-screen, .modal-close").on("click", function() {
+          $(".modal-state:checked").prop("checked", false).change();
+          $("#mc-form input").removeClass("valid");
+          $('#mc-form')[0].reset();
+        });
+        $(".modal-inner").on("click", function(e) {
+          e.stopPropagation();
+        });
+      });
+    </script>
+  </body>
+</html>
